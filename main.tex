@@ -1,0 +1,388 @@
+\RequirePackage{iftex}
+\ifXeTeX
+\else
+    \GenericError{}{编译错误：本模板必须使用 XeLaTeX 编译！}
+    {请将编译器切换为 XeLaTeX 重新编译。}{}
+    \stop
+\fi
+
+\documentclass[openany]{book}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage{graphicx,xcolor,tocloft}
+\usepackage{fancyhdr,geometry,titlesec}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{silence}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=myblue,
+    linkcolor=myblue
+}
+
+% ==================== 页面边距与颜色 ====================
+\geometry{
+    left=2cm,
+    right=2cm,
+    top=2cm,
+    bottom=2cm
+}
+
+\definecolor{myblue}{RGB}{0,83,159}
+
+% ==================== 字体警告处理 ====================
+\WarningFilter{latexfont}
+{Font shape `TU/FandolSong-Regular(0)/b/it' undefined}
+
+% ==================== 定理环境设置 ====================
+\newtheoremstyle{mydefinition}
+  {\topsep}
+  {\topsep}
+  {}
+  {0pt}
+  {\heiti\bfseries}
+  {.}
+  {.5em}
+  {}
+
+\newtheoremstyle{myplain}
+  {\topsep}
+  {\topsep}
+  {}
+  {0pt}
+  {\heiti\bfseries}
+  {.}
+  {.5em}
+  {}
+
+\theoremstyle{mydefinition}
+\newtheorem{definition}{定义}
+\newtheorem{example}{例}
+
+\theoremstyle{myplain}
+\newtheorem{theorem}{定理}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\newtheorem{proposition}[theorem]{命题}
+
+% ==================== 目录设置 ====================
+\renewcommand{\cfttoctitlefont}
+{\hfill\color{myblue}\heiti\Large}
+
+\renewcommand{\cftaftertoctitle}{\hfill}
+
+\renewcommand{\cftpartpagefont}{}
+\renewcommand{\cftpartafterpnum}{\hspace{0pt}}
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsubsecfont}{\normalfont}
+
+\setlength{\cftbeforetoctitleskip}{-0.5em}
+\setlength{\cftaftertoctitleskip}{0.5em}
+\setlength{\cftbeforechapskip}{3pt}
+\setlength{\cftbeforesecskip}{0pt}
+\setlength{\cftbeforesubsecskip}{0pt}
+
+% ==================== 页眉页脚 ====================
+\setlength{\headheight}{15pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[LE,RO]
+{\color{myblue}\leftmark}
+
+\fancyfoot[LE,RO]
+{\color{myblue}\thepage}
+
+\renewcommand{\headrule}
+{{\color{myblue}\hrule height 0.4pt width\headwidth}}
+
+\renewcommand{\footrule}
+{{\color{myblue}\hrule height 0.4pt width\headwidth}}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \fancyhead[LE,RO]
+    {\color{myblue}\leftmark}%
+    \fancyfoot[LE,RO]
+    {\color{myblue}\thepage}%
+    \renewcommand{\headrule}
+    {{\color{myblue}\hrule height 0.4pt width\headwidth}}%
+    \renewcommand{\footrule}
+    {{\color{myblue}\hrule height 0.4pt width\headwidth}}%
+}
+
+% ==================== 总标题格式 ====================
+\titleformat{name=\chapter,numberless}
+    {\color{myblue}\heiti\Large\centering}
+    {}
+    {0pt}
+    {}
+
+\titlespacing*{\chapter}
+{0pt}{-4em}{1em}
+
+% ==================== 一级标题格式 ====================
+% 四个主要部分依次编号
+\renewcommand{\thesection}{\arabic{section}}
+
+\titleformat{\section}
+    {\color{myblue}\heiti\large}
+    {\thesection}
+    {0.5em}
+    {}
+
+\titlespacing*{\section}
+{0pt}{0.8em}{0.5em}
+
+% ==================== 二级标题格式 ====================
+% 编号形式为 3.1、3.2、4.1 等
+\renewcommand{\thesubsection}
+{\thesection.\arabic{subsection}}
+
+\titleformat{\subsection}
+    {\color{myblue}\heiti\normalsize}
+    {\thesubsection}
+    {0.5em}
+    {}
+
+\titlespacing*{\subsection}
+{0pt}{0.7em}{0.5em}
+
+% ==================== 图题设置 ====================
+\renewcommand{\figurename}{图}
+
+% ==================== 表格格式 ====================
+\renewcommand{\arraystretch}{1.4}
+
+% ======================================================
+%                       正文开始
+% ======================================================
+
+% ==================== 本文排版设置 ====================
+\setlength{\emergencystretch}{2em}
+\setlist[itemize]{leftmargin=2em,itemsep=0.2em,topsep=0.3em}
+\newcommand{\Sother}{\mathbf S_{\mathrm{other}}}
+\newcommand{\fixed}{\text{不变}}
+
+\begin{document}
+\raggedbottom
+
+% ==================== 封面 ====================
+\begin{titlepage}
+    \thispagestyle{empty}
+    \centering
+    \vspace*{2cm}
+    {\color{myblue}\rule{\textwidth}{2pt}}\par
+    \vspace{1.5cm}
+    {\color{myblue}\Huge\textbf{Four-State Method for Magnetic Interactions}}\par
+    \vspace{0.5cm}
+    \vspace{0.5cm}
+    {\color{myblue}\Large 对称交换、DM 相互作用与单离子各向异性}\par
+    \vspace{1.5cm}
+    {\color{myblue}\rule{\textwidth}{2pt}}\par
+    \vspace{4cm}
+    {\Large Ethan}\par
+    \vspace{0.5cm}
+    {\large 2026年11月}\par
+    \vfill
+\end{titlepage}
+
+% ==================== 目录 ====================
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+
+\vspace*{-0.5cm}
+\begin{center}
+    {\color{black}\heiti\Large\bfseries Four-State Method for Magnetic Interactions}
+\end{center}
+\vspace{0.3em}
+\addcontentsline{toc}{chapter}{Four-State Method for Magnetic Interactions}
+\markboth{Four-State Method for Magnetic Interactions}{}
+\setcounter{section}{0}
+
+\section{理论背景}
+
+磁性体系的磁序及其稳定性由磁性位点之间的交换作用、自旋轨道耦合引起的各向异性等因素共同决定。
+为了将第一性原理计算结果用于磁基态分析、自旋动力学或蒙特卡洛模拟，
+需要将不同自旋构型的总能量映射到有效自旋哈密顿量，提取相应的磁相互作用参数。
+
+在考虑各向同性对称交换、Dzyaloshinskii--Moriya（DM）相互作用和单轴单离子各向异性时，
+可采用以下模型：
+\[
+\begin{aligned}
+H={}&E_0+\sum_{\langle i,j\rangle}J_{ij}\mathbf S_i\cdot\mathbf S_j
++\sum_{\langle i,j\rangle}\mathbf D_{ij}\cdot(\mathbf S_i\times\mathbf S_j)+\sum_i A_i(\mathbf S_i\cdot\hat{\mathbf z}'_i)^2.
+\end{aligned}
+\]
+其中，\(\langle i,j\rangle\) 表示每对磁性位点只计数一次，各项含义为：
+\begin{itemize}
+    \item \(E_0\)：与自旋方向无关的能量。
+    \item \(J_{ij}\)：各向同性对称交换参数，决定两自旋平行或反平行排列的能量差。
+    \item \(\mathbf D_{ij}\)：DM 相互作用矢量，描述反对称交换，可促使自旋发生倾斜并选择旋转手性。
+    \item \(A_i\)：单轴单离子各向异性参数，描述自旋相对于局部轴 \(\hat{\mathbf z}'_i\) 的方向偏好。
+\end{itemize}
+
+本文采用上述哈密顿量的符号约定：\(J_{ij}>0\) 表示反铁磁交换，\(J_{ij}<0\) 表示铁磁交换；
+对于 \(A_i(S_{iz'})^2\)，\(A_i<0\) 表示易轴，\(A_i>0\) 表示易平面。
+
+各向同性交换 \(J\) 在不包含自旋轨道耦合（SOC）时即可存在。
+DM 相互作用和本文讨论的单离子各向异性来源于 SOC，因此提取 \(D\) 和 \(A\) 时需要包含 SOC。
+
+\section{四态法的基本原理}
+
+四态法通过有选择地翻转目标自旋，将四种构型的总能量进行线性组合，
+消去与目标参数无关的背景贡献。
+
+对于两个目标位点，令其方向分别由 \(\sigma_1,\sigma_2=\pm1\) 表示。
+在选定的自旋方向和上述模型下，四态能量可整理为
+\[
+E(\sigma_1,\sigma_2)=C+a\sigma_1+b\sigma_2+K\sigma_1\sigma_2.
+\]
+其中，\(C\) 为共同背景能量，\(a\)、\(b\) 包含目标自旋与固定背景的耦合贡献，
+\(K\) 为待提取的双自旋项系数。
+按照 \((+,+)\)、\((+,-)\)、\((-,+)\)、\((-,-)\) 的顺序编号，有
+\[
+E_1+E_4-E_2-E_3=4K.
+\]
+因此，目标自旋沿同一轴排列时，可提取 \(J_{12}\)；
+目标自旋分别沿 \(x\)、\(y\) 排列时，在本文模型下可提取 \(D_{12}^{z}\)。
+
+单离子各向异性的提取采用另一种配对方式：
+先将目标自旋沿同一轴的正、反方向能量相加，
+消去随目标自旋反向而变号的交换贡献，再比较两个轴方向的能量。
+对于单位自旋和 \(H_A=A_1(S_{1z'})^2\)，有
+\[
+E_1+E_2=2C+2A_1,\qquad E_3+E_4=2C,
+\]
+从而得到
+\[
+A_1=\frac{E_1+E_2-E_3-E_4}{2}.
+\]
+
+\clearpage
+\begingroup
+\renewcommand{\arraystretch}{1.12}
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
+\setlength{\topsep}{3pt}
+\titlespacing*{\subsection}{0pt}{0.4em}{0.2em}
+\noindent\begin{minipage}{\textwidth}
+\section{四态自旋设置与计算公式}
+
+采用单位自旋，\(|\mathbf S_i|=1\)。
+注：“不变”表示该位点的自旋在同组四次计算中保持相同。
+
+\noindent\begin{minipage}{\textwidth}
+\subsection{对称交换参数 \(J_{12}\)}
+\[
+H_J=J_{12}\mathbf S_1\cdot\mathbf S_2.
+\]
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+自旋态 & \(\mathbf S_1\) & \(\mathbf S_2\) & \(\Sother\) \\ \midrule
+1 & \((0,0,1)\)  & \((0,0,1)\)  & 不变 \\
+2 & \((0,0,1)\)  & \((0,0,-1)\) & 不变 \\
+3 & \((0,0,-1)\) & \((0,0,1)\)  & 不变 \\
+4 & \((0,0,-1)\) & \((0,0,-1)\) & 不变 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\[
+J_{12}=\frac{E_1+E_4-E_2-E_3}{4}.
+\]
+\end{minipage}
+\par\medskip
+
+\noindent\begin{minipage}{\textwidth}
+\subsection{DM 参数 \(D_{12}^{z}\)}
+\[
+H_D=\mathbf D_{12}\cdot(\mathbf S_1\times\mathbf S_2).
+\]
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+自旋态 & \(\mathbf S_1\) & \(\mathbf S_2\) & \(\Sother\) \\ \midrule
+1 & \((1,0,0)\)  & \((0,1,0)\)  & 不变 \\
+2 & \((1,0,0)\)  & \((0,-1,0)\) & 不变 \\
+3 & \((-1,0,0)\) & \((0,1,0)\)  & 不变 \\
+4 & \((-1,0,0)\) & \((0,-1,0)\) & 不变 \\
+\bottomrule
+\end{tabular}
+\end{center}
+论文采用沿 \(z\) 轴的固定背景，计算须包含 SOC。
+\[
+D_{12}^{z}=\frac{E_1+E_4-E_2-E_3}{4}.
+\]
+\end{minipage}
+\par\medskip
+
+\noindent\begin{minipage}{\textwidth}
+\subsection{单离子各向异性参数 \(A_1\)}
+以下分量采用局部坐标系 \(x',y',z'\)：
+\[
+H_A=A_1(S_{1z'})^2.
+\]
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+自旋态 & \(\mathbf S_1\) & \(\mathbf S_2\) & \(\Sother\) \\ \midrule
+1 & \((0,0,1)\)  & 不变 & 不变 \\
+2 & \((0,0,-1)\) & 不变 & 不变 \\
+3 & \((1,0,0)\)  & 不变 & 不变 \\
+4 & \((-1,0,0)\) & 不变 & 不变 \\
+\bottomrule
+\end{tabular}
+\end{center}
+论文采用沿 \(y'\) 的固定背景，计算须包含 SOC。
+\[
+A_1=\frac{E_1+E_2-E_3-E_4}{2}.
+\]
+\end{minipage}
+
+
+\end{minipage}
+\endgroup
+\clearpage
+\section{计算条件与适用范围}
+
+四态能量映射要求同一组计算对应同一个有效自旋模型，具体应保持：
+\begin{itemize}
+    \item \textbf{原子结构一致：}采用相同晶胞和原子坐标，不能将四态分别弛豫后的能量直接用于提取同一参考结构的参数。
+    \item \textbf{计算设置一致：}采用相同的交换关联泛函、赝势、截断能、\(k\) 点、DFT+\(U\) 参数及收敛标准。
+    \item \textbf{背景自旋一致：}同组四态中，未被指定改变的各位点自旋均保持原方向；不同参数计算组之间不要求背景完全相同。
+    \item \textbf{目标方向受控：}应检查实际收敛后的磁矩方向，必要时使用约束自旋计算，防止目标构型自行转变。
+    \item \textbf{局域磁矩基本稳定：}四态法采用固定自旋长度模型；若不同构型的局域磁矩大小显著变化，映射结果需要进一步检查。
+    \item \textbf{超胞足够大：}避免目标位点与周期镜像之间的作用混入所提取的单条磁性键参数。
+\end{itemize}
+
+以上公式针对所列哈密顿量。
+若体系存在显著的对称各向异性交换、高阶自旋作用等额外项，
+需要扩展模型和自旋构型，检查这些项对参数提取的影响。
+采用单位自旋时，所得参数已包含自旋长度归一化的影响，
+与采用 \(|\mathbf S_i|=S\) 定义的参数比较时应统一约定。
+
+\vspace{0.5cm}
+
+\subsection*{参考文献}
+\addcontentsline{toc}{subsection}{参考文献}
+
+H. J. Xiang, E. J. Kan, S.-H. Wei, M.-H. Whangbo, and X. G. Gong,
+``Predicting the spin-lattice order of frustrated systems from first principles,''
+\textit{Physical Review B} \textbf{84}, 224429 (2011).
+\par\noindent
+\href{https://doi.org/10.1103/PhysRevB.84.224429}
+{DOI: 10.1103/PhysRevB.84.224429.}
+
+\end{document}
